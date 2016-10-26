@@ -15,13 +15,14 @@ int* genArray(){
   for(i = 0; i < 10; i++){
     int y = open("file.txt", O_RDONLY, 0444);
     int j;
-    read(y, &j, sizeof(int));
-    *(array + i) = j;
+    read(y, array, 10 * sizeof(int));
+    //*(array + i) = j;
   }
   return array;
 }
 
 void printArray(int* array, char size){
+  printf("Verifying array is equal to the original...\n\n");
   char i;
   for(i = 0; i < size; i++){
     printf("     array[%d] = %d\n", i, array[i]);
