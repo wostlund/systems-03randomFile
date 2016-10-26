@@ -42,12 +42,11 @@ int* changeToInt(char* x){
   for(i = 0; i < strlen(x); i++){
     char* a = calloc(10, sizeof(char));
     int l = 0;
-    while(i!='\n'){
+    while(*(x+i)!='\n'){
       *(a+l) = *(x+i);
       i++;
       l++;
     }
-    i++;
     *(ans+j) = atoi(a);
     printf("%d\n ", *(ans+j));
     free(a);
@@ -65,7 +64,7 @@ int main(){
 
   printf("\nWriting Numbers to File...\n\n");
   write(x, k, 111);
-  free(k);
+  //free(k);
 
   char* y = calloc(111, sizeof(char));
   read(x, y, 111);
