@@ -1,8 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
 #include <fcntl.h>
-#include <errno.h>
 #include <sys/stat.h>
 #include <unistd.h>
 
@@ -30,19 +28,23 @@ void printArray(int* array, char size){
 
 int main(){
   umask(0000);
-  srand(time(NULL));
   int* array1 = calloc(40, 1);
   char i;
-  int file = open("file.txt", O_RDWR | O_CREAT, 0666);
+
+  int file = open("/dev/random", O_RDONLY, 0444);
   printf("Generating random numbers...\n\n");
-  for(i = 0; i < 10; i++){
-    *(array1 + i) = rand();
-    printf("    random %d: %d\n", i, array1[i]);
+  read(file, array1, 10 * sizeof(int));
+  for(i = 0; i < 10; i ++){
+    printf("    Random number %d: %d\n", i, *(array1 + i));
   }
-  printf("\nWriting numbers into file\n\n");
+  close(file);
+
+  int f = open("file.txt", O_CREAT | O_RDWR, 0666);
+  printf("\nWriting numbers into file...\n\n");
   for(i = 0; i < 10; i++){
-    write(file, array1 + i, sizeof(int));
+    write(f, array1 + i, sizeof(int));
   }
+
   int* array2 = genArray();
   printArray(array2, 10);
   return 0;
