@@ -5,7 +5,6 @@
 #include <errno.h>
 #include <sys/stat.h>
 #include <unistd.h>
-#include <string.h>
 
 int* genArray(){
   umask(0000);
