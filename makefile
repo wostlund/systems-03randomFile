@@ -3,7 +3,6 @@ compile: main.c
 
 
 clean:
-	rm file1.txt
 	rm *~
 
 run: driver
